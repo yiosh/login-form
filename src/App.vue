@@ -1,10 +1,10 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app color="white" dark>
+    <v-app-bar height="50px" elevation="1" app color="white" dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
+      <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
         <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <!-- <v-spacer></v-spacer> -->
       <v-img
@@ -16,10 +16,10 @@
 
     <v-content>
       <v-container fluid fill-height>
-        <v-layout align-center justify-center>
+        <v-layout align-center justify-center wrap>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar dark color="#d21919" flat>
+              <v-toolbar dark color="black" flat>
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
@@ -41,12 +41,23 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn style="padding: 0 2em" dark color="#d21919">Login</v-btn>
-                <v-spacer></v-spacer>
+                <v-layout justify-center wrap>
+                  <v-flex style="text-align:center" xs12>
+                    <v-btn style="padding: 0 2em; margin: 0 auto;" dark color="#d21919">Login</v-btn>
+                  </v-flex>
+                  <v-flex style="text-align:center; margin-top: 1em;" xs12>
+                    <p>Non sei registrato? <a href="//demo.condivision.cloud/v4/fl_app/registerForm">Registrati per accedere.</a></p>
+                  </v-flex>
+                </v-layout>
+                <!-- <v-spacer></v-spacer>
+                
+                <v-spacer></v-spacer> -->
               </v-card-actions>
             </v-card>
+            <p style="text-align:center; margin-top: 2em;">2019 1x2live.it – <a href="//pcmax-web.it/fersino/chi-siamo/">Torna al sito web</a></p>
           </v-flex>
+          <!-- <v-flex>
+          </v-flex> -->
         </v-layout>
       </v-container>
     </v-content>
