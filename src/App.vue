@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar height="50px" elevation="1" app color="white" dark>
+    <v-app-bar height="50px" elevation="0" style="box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.1) !important;" app color="white" dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
         <v-icon>mdi-arrow-left</v-icon>
@@ -18,7 +18,7 @@
       <v-container fluid fill-height>
         <v-layout align-center justify-center wrap>
           <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
+            <v-card class="elevation-2">
               <v-toolbar dark color="black" flat>
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
