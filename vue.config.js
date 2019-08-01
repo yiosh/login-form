@@ -1,4 +1,4 @@
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === "production" ? "/v4/fl_app/loginForm" : "/"
+  publicPath: process.env.NODE_ENV === "production" ? "/fl_app/loginForm" : "/",
+  indexPath: "index.php"
 };
