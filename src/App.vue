@@ -1,6 +1,13 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar height="50px" elevation="0" style="box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.1) !important;" app color="white" dark>
+    <v-app-bar
+      height="50px"
+      elevation="0"
+      style="box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.1) !important;"
+      app
+      color="white"
+      dark
+    >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
         <v-icon>mdi-arrow-left</v-icon>
@@ -23,8 +30,12 @@
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
+                <v-alert v-if="false" type="error">
+                  {{ alertMessage }}
+                </v-alert>
                 <v-form>
                   <v-text-field
+                    v-model="user"
                     label="Username"
                     name="username"
                     prepend-icon="mdi-account"
@@ -32,6 +43,7 @@
                   ></v-text-field>
 
                   <v-text-field
+                    v-model="pwd"
                     id="password"
                     label="Password"
                     name="password"
@@ -43,10 +55,21 @@
               <v-card-actions>
                 <v-layout justify-center wrap>
                   <v-flex style="text-align:center" xs12>
-                    <v-btn style="padding: 0 2em; margin: 0 auto;" dark color="#d21919">Login</v-btn>
+                    <v-btn
+                      style="padding: 0 2em; margin: 0 auto;"
+                      dark
+                      color="#d21919"
+                      @click="handleLogin"
+                      >Login</v-btn
+                    >
                   </v-flex>
                   <v-flex style="text-align:center; margin-top: 1em;" xs12>
-                    <p>Non sei registrato? <a href="//demo.condivision.cloud/v4/fl_app/registerForm">Registrati per accedere.</a></p>
+                    <p>
+                      Non sei registrato?
+                      <a href="//secure.1x2live.it/fl_app/registerForm"
+                        >Registrati per accedere.</a
+                      >
+                    </p>
                   </v-flex>
                 </v-layout>
                 <!-- <v-spacer></v-spacer>
@@ -54,7 +77,10 @@
                 <v-spacer></v-spacer> -->
               </v-card-actions>
             </v-card>
-            <p style="text-align:center; margin-top: 2em;">2019 1x2live.it – <a href="//pcmax-web.it/fersino/chi-siamo/">Torna al sito web</a></p>
+            <p style="text-align:center; margin-top: 2em;">
+              2019 1x2live.it –
+              <a href="//pcmax-web.it/fersino/chi-siamo/">Torna al sito web</a>
+            </p>
           </v-flex>
           <!-- <v-flex>
           </v-flex> -->
@@ -65,13 +91,38 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  // props: {
-  //   source: String
-  // },
   data: () => ({
-    drawer: null
-  })
+    alertMessage: "I'm an error alert.",
+    drawer: null,
+    user: "",
+    pwd: "",
+    formData: new FormData()
+  }),
+  methods: {
+    handleLogin() {
+      this.formData.append("user", this.user);
+      this.formData.append("pwd", this.pwd);
+
+      axios
+        .post(
+          `${location.protocol}//${location.hostname}/fl_core/loginAjax.php`,
+          this.formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          }
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 
@@ -81,4 +132,3 @@ export default {
   background-color: #f5f5f5;
 }
 </style>
-
