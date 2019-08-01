@@ -1,3 +1,22 @@
+<?php
+
+session_start(); 
+session_unset();
+session_destroy();
+
+$cookieLifetime = 365 * 24 * 60 * 60; // A year in seconds
+ini_set('session.gc_maxlifetime', $cookieLifetime);
+session_set_cookie_params($cookieLifetime);
+
+session_start();
+setcookie(session_name(),session_id(),time()+$cookieLifetime);
+$_SESSION['loginToken'] = time();
+$_SESSION['count'] = 0;
+
+if(isset($_SESSION['number'])){ header("Location: ../../"); exit; }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +24,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>login-form</title>
+    <title>Accedi <?php echo $_SESSION['loginToken']; ?></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   </head>
