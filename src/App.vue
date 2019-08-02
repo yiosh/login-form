@@ -30,7 +30,7 @@
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-alert v-if="false" type="error">
+                <v-alert v-if="alertMessage" type="error">
                   {{ alertMessage }}
                 </v-alert>
                 <v-form>
@@ -59,6 +59,7 @@
                       style="padding: 0 2em; margin: 0 auto;"
                       dark
                       color="#d21919"
+                      :loading="loading"
                       @click="handleLogin"
                       >Login</v-btn
                     >
@@ -66,7 +67,7 @@
                   <v-flex style="text-align:center; margin-top: 1em;" xs12>
                     <p>
                       Non sei registrato?
-                      <a href="//secure.1x2live.it/fl_app/registerForm"
+                      <a href="#" style="color: #d21919;"
                         >Registrati per accedere.</a
                       >
                     </p>
@@ -78,8 +79,7 @@
               </v-card-actions>
             </v-card>
             <p style="text-align:center; margin-top: 2em;">
-              2019 1x2live.it –
-              <a href="//pcmax-web.it/fersino/chi-siamo/">Torna al sito web</a>
+              2019 1x2live.it
             </p>
           </v-flex>
           <!-- <v-flex>
@@ -94,16 +94,21 @@
 import axios from "axios";
 export default {
   data: () => ({
-    alertMessage: "I'm an error alert.",
+    alertMessage: "",
     drawer: null,
     user: "",
     pwd: "",
+    ip: "",
+    loading: false,
     formData: new FormData()
   }),
   methods: {
     handleLogin() {
       this.formData.append("user", this.user);
       this.formData.append("pwd", this.pwd);
+      this.formData.append("idh", this.ip);
+      this.alertMessage = "";
+      this.loading = true;
 
       axios
         .post(
@@ -116,12 +121,33 @@ export default {
           }
         )
         .then(response => {
+          this.loading = false;
           console.log(response);
+
+          if (response.data.redirect) {
+            window.location.href = response.data.redirect;
+          }
+
+          if (response.data.esito != "OK") {
+            this.alertMessage = response.data.esito;
+          }
         })
         .catch(error => {
+          this.loading = false;
           console.log(error);
         });
     }
+  },
+  created() {
+    axios
+      .get("https://json.geoiplookup.io")
+      .then(response => {
+        console.log("response", response.data);
+        this.ip = response.data.ip;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>
