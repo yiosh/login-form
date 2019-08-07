@@ -8,17 +8,17 @@
       color="white"
       dark
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn> -->
 
       <!-- <v-spacer></v-spacer> -->
-      <v-img
+      <!-- <v-img
         src="https://secure.1x2live.it/fl_config/secure.1x2live.it/img/logo.jpg"
         max-height="100%"
         contain
-      ></v-img>
+      ></v-img> -->
     </v-app-bar>
 
     <v-content>
@@ -78,9 +78,9 @@
                 <v-spacer></v-spacer> -->
               </v-card-actions>
             </v-card>
-            <p style="text-align:center; margin-top: 2em;">
+            <!-- <p style="text-align:center; margin-top: 2em;">
               2019 1x2live.it
-            </p>
+            </p> -->
           </v-flex>
           <!-- <v-flex>
           </v-flex> -->
