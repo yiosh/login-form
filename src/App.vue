@@ -70,7 +70,7 @@
                   <v-flex style="text-align:center; margin-top: 1em;" xs12>
                     <p>
                       Non sei registrato?
-                      <a href="#" style="color: #ad1e24;"
+                      <a href="https://www.1x2live.it/" style="color: #ad1e24;"
                         >Registrati per accedere.</a
                       >
                     </p>
