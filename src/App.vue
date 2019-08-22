@@ -37,6 +37,7 @@
                   <v-text-field
                     v-model="user"
                     label="Username"
+                    color="#ad1e24"
                     name="username"
                     prepend-icon="mdi-account"
                     type="text"
@@ -46,6 +47,7 @@
                     v-model="pwd"
                     id="password"
                     label="Password"
+                    color="#ad1e24"
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
@@ -58,16 +60,17 @@
                     <v-btn
                       style="padding: 0 2em; margin: 0 auto;"
                       dark
-                      color="#d21919"
+                      color="#ad1e24"
                       :loading="loading"
                       @click="handleLogin"
                       >Login</v-btn
                     >
+                    <!-- color="#d21919" -->
                   </v-flex>
                   <v-flex style="text-align:center; margin-top: 1em;" xs12>
                     <p>
                       Non sei registrato?
-                      <a href="#" style="color: #d21919;"
+                      <a href="#" style="color: #ad1e24;"
                         >Registrati per accedere.</a
                       >
                     </p>
@@ -155,6 +158,6 @@ export default {
 <style>
 #inspire {
   font-family: "Montserrat", sans-serif !important;
-  background-color: #f5f5f5;
+  background-color: rgb(245, 245, 245) !important;
 }
 </style>
