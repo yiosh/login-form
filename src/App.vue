@@ -36,7 +36,7 @@
                 <v-form>
                   <v-text-field
                     v-model="user"
-                    label="Username"
+                    placeholder="Username"
                     color="#ad1e24"
                     name="username"
                     prepend-icon="mdi-account"
@@ -46,7 +46,8 @@
                   <v-text-field
                     v-model="pwd"
                     id="password"
-                    label="Password"
+                    ref="password"
+                    placeholder="Password"
                     color="#ad1e24"
                     name="password"
                     prepend-icon="mdi-lock"
@@ -127,8 +128,9 @@ export default {
           this.loading = false;
           console.log(response);
 
-          if (response.data.redirect) {
-            window.location.href = response.data.redirect;
+          if (response.data.redirect || response.data.includes("redirect")) {
+            // window.location.href = response.data.redirect;
+            window.location.href = location.origin;
           }
 
           if (response.data.esito != "OK") {
