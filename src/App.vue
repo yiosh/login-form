@@ -8,53 +8,51 @@
       color="white"
       dark
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn> -->
-
-      <!-- <v-spacer></v-spacer> -->
       <v-img
-        src="https://secure.1x2live.it/fl_config/secure.1x2live.it/img/logo.jpg"
+        src="https://demo.condivision.cloud/fl_config/demo.condivision.cloud/img/logo.png"
         max-height="100%"
         contain
       ></v-img>
     </v-app-bar>
 
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center wrap>
-          <v-flex xs12 sm8 md4>
+      <v-container fill-height>
+        <v-row>
+          <v-col cols="3">
             <v-card class="elevation-2">
-              <v-toolbar dark color="black" flat>
+              <v-toolbar dark color="#454545" flat>
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
-              <v-card-text>
-                <v-alert v-if="alertMessage" type="error">
-                  {{ alertMessage }}
-                </v-alert>
-                <v-form>
-                  <v-text-field
-                    v-model="user"
-                    placeholder="Username"
-                    color="#ad1e24"
-                    name="username"
-                    prepend-icon="mdi-account"
-                    type="text"
-                  ></v-text-field>
+              <!-- <v-card-text> -->
+              <v-container>
+                <v-row justify="center">
+                  <v-alert v-if="alertMessage" type="error">
+                    {{ alertMessage }}
+                  </v-alert>
+                  <v-form>
+                    <v-text-field
+                      v-model="user"
+                      placeholder="Username"
+                      color="#ad1e24"
+                      name="username"
+                      prepend-icon="mdi-account"
+                      type="text"
+                    ></v-text-field>
 
-                  <v-text-field
-                    v-model="pwd"
-                    id="password"
-                    ref="password"
-                    placeholder="Password"
-                    color="#ad1e24"
-                    name="password"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                  ></v-text-field>
-                </v-form>
-              </v-card-text>
+                    <v-text-field
+                      v-model="pwd"
+                      id="password"
+                      ref="password"
+                      placeholder="Password"
+                      color="#ad1e24"
+                      name="password"
+                      prepend-icon="mdi-lock"
+                      type="password"
+                    ></v-text-field>
+                  </v-form>
+                </v-row>
+              </v-container>
+              <!-- </v-card-text> -->
               <v-card-actions>
                 <v-layout justify-center wrap>
                   <v-flex style="text-align:center" xs12>
@@ -68,7 +66,10 @@
                     >
                     <!-- color="#d21919" -->
                   </v-flex>
-                  <v-flex style="text-align:center; margin-top: 1em;" xs12>
+                  <v-flex
+                    style="text-align:center; margin-top: 1em; font-size:small;"
+                    xs12
+                  >
                     <p>
                       Non sei registrato?
                       <a href="https://www.1x2live.it/" style="color: #ad1e24;"
@@ -77,18 +78,22 @@
                     </p>
                   </v-flex>
                 </v-layout>
-                <!-- <v-spacer></v-spacer>
-                
-                <v-spacer></v-spacer> -->
+                <v-divider></v-divider>
               </v-card-actions>
             </v-card>
-            <p style="text-align:center; margin-top: 2em;">
-              2019 1x2live.it
+            <p style="text-align:center; margin-top: 2em; font-size:small;">
+              2019 Condivision 2.0 -
+              <a href="//www.aryma.it/" style="color: #ad1e24;">
+                made in aryma
+              </a>
             </p>
+          </v-col>
+        </v-row>
+        <!-- <v-layout align-center justify-left wrap>
+          <v-flex xs12 sm8 md4>
+            
           </v-flex>
-          <!-- <v-flex>
-          </v-flex> -->
-        </v-layout>
+        </v-layout> -->
       </v-container>
     </v-content>
   </v-app>
