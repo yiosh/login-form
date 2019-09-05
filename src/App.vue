@@ -128,13 +128,13 @@ export default {
           this.loading = false;
           console.log(response);
 
+          if (response.data.esito != "OK") {
+            this.alertMessage = response.data.esito;
+          }
+
           if (response.data.redirect || response.data.includes("redirect")) {
             // window.location.href = response.data.redirect;
             window.location.href = location.origin;
-          }
-
-          if (response.data.esito != "OK") {
-            this.alertMessage = response.data.esito;
           }
         })
         .catch(error => {
