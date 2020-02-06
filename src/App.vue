@@ -17,19 +17,20 @@
 
     <v-content>
       <v-container fill-height>
-        <v-row>
-          <v-col cols="3">
+        <v-row class="justify-center">
+          <v-col cols="4">
             <v-card class="elevation-2">
               <v-toolbar dark color="#454545" flat>
                 <v-toolbar-title>Login</v-toolbar-title>
               </v-toolbar>
               <!-- <v-card-text> -->
-              <v-container>
-                <v-row justify="center">
-                  <v-alert v-if="alertMessage" type="error">
-                    {{ alertMessage }}
-                  </v-alert>
-                  <v-form>
+              <!-- <v-container> -->
+              <v-row justify="center">
+                <v-alert v-if="alertMessage" type="error">
+                  {{ alertMessage }}
+                </v-alert>
+                <v-form style="width: 100%" class="px-4">
+                  <v-col class="pb-0">
                     <v-text-field
                       v-model="user"
                       placeholder="Username"
@@ -38,7 +39,9 @@
                       prepend-icon="mdi-account"
                       type="text"
                     ></v-text-field>
+                  </v-col>
 
+                  <v-col class="pt-0">
                     <v-text-field
                       v-model="pwd"
                       id="password"
@@ -49,9 +52,10 @@
                       prepend-icon="mdi-lock"
                       type="password"
                     ></v-text-field>
-                  </v-form>
-                </v-row>
-              </v-container>
+                  </v-col>
+                </v-form>
+              </v-row>
+              <!-- </v-container> -->
               <!-- </v-card-text> -->
               <v-card-actions>
                 <v-layout justify-center wrap>
