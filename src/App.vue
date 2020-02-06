@@ -76,6 +76,12 @@
                       >
                     </p>
                   </v-flex>
+                  <v-flex style="text-align:center; margin-top: .2em;" xs12>
+                    <p>
+                      Password dimenticata?
+                      <a href="#" style="color: #ad1e24;">Recupera password</a>
+                    </p>
+                  </v-flex>
                 </v-layout>
                 <!-- <v-spacer></v-spacer>
                 
