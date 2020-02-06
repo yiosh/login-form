@@ -27,7 +27,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-2">
               <v-toolbar dark color="black" flat>
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>Recupera Password</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-alert v-if="alertMessage" type="error">
@@ -36,27 +36,25 @@
                 <v-form>
                   <v-text-field
                     v-model="user"
-                    placeholder="Username"
+                    placeholder="Nuova Password"
                     color="#ad1e24"
-                    name="username"
+                    name="password"
                     prepend-icon="mdi-account"
-                    type="text"
+                    type="password"
                   ></v-text-field>
 
                   <v-text-field
-                    v-model="pwd"
-                    id="password"
-                    ref="password"
-                    placeholder="Password"
+                    v-model="user"
+                    placeholder="Conferma Password"
                     color="#ad1e24"
-                    name="password"
-                    prepend-icon="mdi-lock"
+                    name="password-confirm"
+                    prepend-icon="mdi-account"
                     type="password"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-layout justify-center wrap>
+                <v-layout justify-center wrap class="mb-4">
                   <v-flex style="text-align:center" xs12>
                     <v-btn
                       style="padding: 0 2em; margin: 0 auto;"
@@ -64,28 +62,11 @@
                       color="#ad1e24"
                       :loading="loading"
                       @click="handleLogin"
-                      >Login</v-btn
+                      >Resetta</v-btn
                     >
                     <!-- color="#d21919" -->
                   </v-flex>
-                  <v-flex style="text-align:center; margin-top: 1em;" xs12>
-                    <p>
-                      Non sei registrato?
-                      <a href="https://www.1x2live.it/" style="color: #ad1e24;"
-                        >Registrati per accedere.</a
-                      >
-                    </p>
-                  </v-flex>
-                  <v-flex style="text-align:center; margin-top: .2em;" xs12>
-                    <p>
-                      Password dimenticata?
-                      <a href="#" style="color: #ad1e24;">Recupera password</a>
-                    </p>
-                  </v-flex>
                 </v-layout>
-                <!-- <v-spacer></v-spacer>
-                
-                <v-spacer></v-spacer> -->
               </v-card-actions>
             </v-card>
             <p style="text-align:center; margin-top: 2em;">
