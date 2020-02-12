@@ -13,54 +13,52 @@
         src="https://secure.1x2live.it/fl_config/secure.1x2live.it/img/logo.jpg"
         max-height="100%"
         contain
-      ></v-img>
+      />
     </v-app-bar>
 
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center wrap>
           <v-flex xs12 sm8 md4>
-            <v-card class="elevation-2">
-              <v-toolbar dark color="black" flat>
-                <v-toolbar-title>Recupera Password</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-alert v-if="alertMessage" type="error">
-                  {{ alertMessage }}
-                </v-alert>
-                <v-form>
+            <v-form v-model="valid" @submit.prevent="handleSubmit">
+              <v-card class="elevation-2">
+                <v-toolbar dark color="black" flat>
+                  <v-toolbar-title>Recupera Password</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <v-alert v-if="alertMessage" :type="alertType">
+                    {{ alertMessage }}
+                  </v-alert>
                   <v-text-field
-                    v-model="user"
+                    v-model="email"
                     placeholder="Email"
                     color="#ad1e24"
                     name="email"
+                    :rules="emailRules"
                     prepend-icon="mdi-account"
                     type="email"
                   ></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-layout justify-center wrap class="mb-4">
-                  <v-flex style="text-align:center" xs12>
-                    <v-btn
-                      style="padding: 0 2em; margin: 0 auto;"
-                      dark
-                      color="#ad1e24"
-                      :loading="loading"
-                      @click="handleLogin"
-                      >Invia link di reset</v-btn
-                    >
-                    <!-- color="#d21919" -->
-                  </v-flex>
-                </v-layout>
-              </v-card-actions>
-            </v-card>
+                </v-card-text>
+                <v-card-actions>
+                  <v-layout justify-center wrap class="mb-4">
+                    <v-flex style="text-align:center" xs12>
+                      <v-btn
+                        style="padding: 0 2em; margin: 0 auto;"
+                        dark
+                        color="#ad1e24"
+                        :loading="loading"
+                        type="submit"
+                        >Invia link di reset</v-btn
+                      >
+                    </v-flex>
+                  </v-layout>
+                </v-card-actions>
+              </v-card>
+            </v-form>
             <p style="text-align:center; margin-top: 2em;">
               2019 1x2live.it
             </p>
           </v-flex>
-          <!-- <v-flex>
-          </v-flex> -->
         </v-layout>
       </v-container>
     </v-content>
@@ -73,42 +71,57 @@ export default {
   data: () => ({
     alertMessage: "",
     drawer: null,
-    user: "",
-    pwd: "",
+    email: "",
     ip: "",
     loading: false,
-    formData: new FormData()
+    formData: new FormData(),
+    alertType: "error",
+    emailRules: [
+      v => !!v || "E-mail obbligatoria",
+      v => /.+@.+\..+/.test(v) || "L'email deve essere valida"
+    ],
+    valid: true
   }),
   methods: {
-    handleLogin() {
-      this.formData.append("user", this.user);
-      this.formData.append("pwd", this.pwd);
-      this.formData.append("idh", this.ip);
+    handleSubmit() {
+      this.formData.append("sendResetEmail", true);
+      this.formData.append("token", 1);
+      this.formData.append("email", this.email);
+      if (this.email === "") {
+        this.alertType = "error";
+        this.alertMessage = "Si prega di inserire un indirizzo email valido";
+        return;
+      }
       this.alertMessage = "";
       this.loading = true;
 
+      const host =
+        location.hostname === "localhost"
+          ? "secure.1x2live.it"
+          : location.hostname;
+
       axios
-        .post(
-          `${location.protocol}//${location.hostname}/fl_core/loginAjax.php`,
-          this.formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
+        .post(`https://${host}/fl_api/resetPassword.php`, this.formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
           }
-        )
+        })
         .then(response => {
           this.loading = false;
           console.log(response);
 
-          if (response.data.esito != "OK") {
-            this.alertMessage = response.data.esito;
+          if (response.data.status) {
+            this.alertType = "success";
+            this.alertMessage = response.data.message;
+          } else {
+            this.alertType = "error";
+            this.alertMessage = response.data.message;
           }
 
-          if (response.data.redirect || response.data.includes("redirect")) {
-            // window.location.href = response.data.redirect;
-            window.location.href = location.origin;
-          }
+          // if (response.data.redirect || response.data.includes("redirect")) {
+          //   // window.location.href = response.data.redirect;
+          //   window.location.href = location.origin;
+          // }
         })
         .catch(error => {
           this.loading = false;
