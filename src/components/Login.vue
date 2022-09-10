@@ -110,7 +110,7 @@ export default {
     pwd: "",
     ip: "",
     loading: false,
-    formData: new FormData()
+    formData: new FormData(),
   }),
   methods: {
     handleLogin() {
@@ -126,11 +126,11 @@ export default {
           this.formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data"
-            }
+              "Content-Type": "multipart/form-data",
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           this.loading = false;
           console.log(response);
 
@@ -143,23 +143,33 @@ export default {
             window.location.href = location.origin;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false;
           console.log(error);
         });
-    }
+    },
   },
   created() {
+    // axios
+    //   .get("https://json.geoiplookup.io")
+    //   .then(response => {
+    //     console.log("response", response.data);
+    //     this.ip = response.data.ip;
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
     axios
-      .get("https://json.geoiplookup.io")
-      .then(response => {
+      .get("https://api.db-ip.com/v2/free/self")
+      .then((response) => {
         console.log("response", response.data);
-        this.ip = response.data.ip;
+        this.ip = response.data.ipAddress;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 

@@ -9,56 +9,91 @@
       dark
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-btn href="https://pcmax-web.it/fersino/chi-siamo/" light icon>
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn> -->
+
+      <!-- <v-spacer></v-spacer> -->
       <v-img
         src="https://secure.1x2live.it/fl_config/secure.1x2live.it/img/logo.jpg"
         max-height="100%"
         contain
-      />
+      ></v-img>
     </v-app-bar>
 
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center wrap>
           <v-flex xs12 sm8 md4>
-            <v-form v-model="valid" @submit.prevent="handleSubmit">
-              <v-card class="elevation-2">
-                <v-toolbar dark color="black" flat>
-                  <v-toolbar-title>Recupera Password</v-toolbar-title>
-                </v-toolbar>
-                <v-card-text>
-                  <v-alert v-if="alertMessage" :type="alertType">
-                    {{ alertMessage }}
-                  </v-alert>
+            <v-card class="elevation-2">
+              <v-toolbar dark color="black" flat>
+                <v-toolbar-title>Login</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-alert v-if="alertMessage" type="error">
+                  {{ alertMessage }}
+                </v-alert>
+                <v-form>
                   <v-text-field
-                    v-model="email"
-                    placeholder="Email"
+                    v-model="user"
+                    placeholder="Username"
                     color="#ad1e24"
-                    name="email"
-                    :rules="emailRules"
+                    name="username"
                     prepend-icon="mdi-account"
-                    type="email"
+                    type="text"
                   ></v-text-field>
-                </v-card-text>
-                <v-card-actions>
-                  <v-layout justify-center wrap class="mb-4">
-                    <v-flex style="text-align:center" xs12>
-                      <v-btn
-                        style="padding: 0 2em; margin: 0 auto;"
-                        dark
-                        color="#ad1e24"
-                        :loading="loading"
-                        type="submit"
-                        >Invia link di reset</v-btn
+
+                  <v-text-field
+                    v-model="pwd"
+                    id="password"
+                    ref="password"
+                    placeholder="Password"
+                    color="#ad1e24"
+                    name="password"
+                    prepend-icon="mdi-lock"
+                    type="password"
+                  ></v-text-field>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-layout justify-center wrap>
+                  <v-flex style="text-align:center" xs12>
+                    <v-btn
+                      style="padding: 0 2em; margin: 0 auto;"
+                      dark
+                      color="#ad1e24"
+                      :loading="loading"
+                      @click="handleLogin"
+                      >Login</v-btn
+                    >
+                    <!-- color="#d21919" -->
+                  </v-flex>
+                  <v-flex style="text-align:center; margin-top: 1em;" xs12>
+                    <p>
+                      Non sei registrato?
+                      <a href="https://www.1x2live.it/" style="color: #ad1e24;"
+                        >Registrati per accedere.</a
                       >
-                    </v-flex>
-                  </v-layout>
-                </v-card-actions>
-              </v-card>
-            </v-form>
+                    </p>
+                  </v-flex>
+                  <!-- <v-flex style="text-align:center; margin-top: .2em;" xs12>
+                    <p>
+                      Password dimenticata?
+                      <a href="#" style="color: #ad1e24;">Recupera password</a>
+                    </p>
+                  </v-flex> -->
+                </v-layout>
+                <!-- <v-spacer></v-spacer>
+                  
+                  <v-spacer></v-spacer> -->
+              </v-card-actions>
+            </v-card>
             <p style="text-align:center; margin-top: 2em;">
               2019 1x2live.it
             </p>
           </v-flex>
+          <!-- <v-flex>
+            </v-flex> -->
         </v-layout>
       </v-container>
     </v-content>
@@ -71,75 +106,70 @@ export default {
   data: () => ({
     alertMessage: "",
     drawer: null,
-    email: "",
+    user: "",
+    pwd: "",
     ip: "",
     loading: false,
     formData: new FormData(),
-    alertType: "error",
-    emailRules: [
-      v => !!v || "E-mail obbligatoria",
-      v => /.+@.+\..+/.test(v) || "L'email deve essere valida"
-    ],
-    valid: true
   }),
   methods: {
-    handleSubmit() {
-      this.formData.append("sendResetEmail", true);
-      this.formData.append("token", 1);
-      this.formData.append("email", this.email);
-      if (this.valid !== true) {
-        this.alertType = "error";
-        this.alertMessage = "Si prega di inserire un indirizzo email valido";
-        return;
-      }
+    handleLogin() {
+      this.formData.append("user", this.user);
+      this.formData.append("pwd", this.pwd);
+      this.formData.append("idh", this.ip);
       this.alertMessage = "";
       this.loading = true;
 
-      const host =
-        location.hostname === "localhost"
-          ? "secure.1x2live.it"
-          : location.hostname;
-
       axios
-        .post(`https://${host}/fl_api/resetPassword.php`, this.formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
+        .post(
+          `${location.protocol}//${location.hostname}/fl_core/loginAjax.php`,
+          this.formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        })
-        .then(response => {
+        )
+        .then((response) => {
           this.loading = false;
           console.log(response);
 
-          if (response.data.status) {
-            this.alertType = "success";
-            this.alertMessage = response.data.message;
-          } else {
-            this.alertType = "error";
-            this.alertMessage = response.data.message;
+          if (response.data.esito != "OK") {
+            this.alertMessage = response.data.esito;
           }
 
-          // if (response.data.redirect || response.data.includes("redirect")) {
-          //   // window.location.href = response.data.redirect;
-          //   window.location.href = location.origin;
-          // }
+          if (response.data.redirect || response.data.includes("redirect")) {
+            // window.location.href = response.data.redirect;
+            window.location.href = location.origin;
+          }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false;
           console.log(error);
         });
-    }
+    },
   },
   created() {
+    // axios
+    //   .get("https://json.geoiplookup.io")
+    //   .then(response => {
+    //     console.log("response", response.data);
+    //     this.ip = response.data.ip;
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
     axios
-      .get("https://json.geoiplookup.io")
-      .then(response => {
+      .get("https://api.ipify.org?format=json")
+      .then((response) => {
         console.log("response", response.data);
-        this.ip = response.data.ip;
+        this.ip = response.data.ipAddress;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 
